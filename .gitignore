@@ -1,0 +1,10 @@
+build/
+*.o
+moc_*.cpp
+ui_*.h
+*~
+vb-agent
+res/.directory
+.\#*
+\#*#
+TODO

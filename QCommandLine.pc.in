@@ -1,0 +1,11 @@
+prefix=@CMAKE_INSTALL_PREFIX@
+exec_prefix=${prefix}
+libdir=@LIB_INSTALL_DIR@
+includedir=@INCLUDE_INSTALL_DIR@
+
+Name: QCommandLine
+Description: QCommandLine is a qt-based library to parse command options
+Version: @QCOMMANDLINE_LIB_MAJOR_VERSION@.@QCOMMANDLINE_LIB_MINOR_VERSION@.@QCOMMANDLINE_LIB_PATCH_VERSION@
+Requires: QtCore
+Libs: -L${libdir} -lqcommandline
+Cflags: -I${includedir}
