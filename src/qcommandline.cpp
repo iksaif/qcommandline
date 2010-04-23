@@ -82,7 +82,7 @@ QCommandLine::setArguments(int argc, char *argv[])
 {
   d.args.clear();
   for (int i = 0; i < argc; i++)
-    d.args.append(argv[0]);
+    d.args.append(argv[i]);
 }
 
 void
