@@ -1,0 +1,5 @@
+- documentation
+- unit testing
+- types for options (QCommandLine::Integer / QCommandLine::String ?)
+- webpage/readme with examples and informations
+- 0.1 release (ebuild + tar.gz [+ deb])
