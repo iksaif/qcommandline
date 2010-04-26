@@ -17,7 +17,7 @@ else (QCOMMANDLINE_INCLUDE_DIR AND QCOMMANDLINE_LIBRARIES)
     # use pkg-config to get the values of QCOMMANDLINE_INCLUDE_DIRS
     # and QCOMMANDLINE_LIBRARY_DIRS to add as hints to the find commands.
     include (FindPkgConfig)
-    pkg_check_modules (QCOMMANDLINE QCommandLine >=0.1)
+    pkg_check_modules (QCOMMANDLINE QCommandLine>=0.1)
   endif (NOT WIN32)
 
   find_library (QCOMMANDLINE_LIBRARIES
