@@ -28,13 +28,31 @@ struct QCommandLinePrivate {
 };
 #define QCOMMANDLINE_CONFIG_ENTRY_END       { QCommandLine::None, NULL, NULL, NULL, QCommandLine::Default }
 
+/**
+ * @brief Main class used to convert parse command line
+ */
 class QCOMMANDLINE_EXPORT QCommandLine : public QObject
 {
   Q_OBJECT
 public:
-    typedef enum { None = 0, Switch, Option, Param } Type;
+    /**
+     * Enum used to determine entry type in QCommandLineConfigEntry
+     */
     typedef enum {
-	Default = 0, Mandatory = 0x01, Optional = 0x02, Multiple = 0x04,
+	None = 0, /**< can be used for the last line of a QCommandLineConfigEntry[] . */
+	Switch, /**< a simple switch wihout argument (eg: ls -l) */
+	Option, /**< an option with an argument (eg: tar -f test.tar) */
+	Param /**< a parameter without '-' delimiter (eg: cp foo bar) */
+    } Type;
+
+    /**
+     * Flags that can be applied to a QCommandLineConfigEntry
+     */
+    typedef enum {
+	Default = 0, /**< can be used for the last line of a QCommandLineConfigEntry[] . */
+	Mandatory = 0x01, /**< mandatory argument, will produce a parse error if not present */
+	Optional = 0x02, /**< optional argument */
+	Multiple = 0x04, /**< argument can be used multiple time and will produce multiple signals. */
 	MandatoryMultiple = Mandatory|Multiple,
 	OptionalMultiple = Optional|Multiple,
     } Flags;
@@ -62,6 +80,12 @@ public:
     void enableVersion(bool enable);
     bool versionEnabled();
 
+    /**
+     * Parse command line and emmit signals when switchs, options, or
+     * param are found.
+     * @returns true if successfully parsed; otherwise returns false.
+     * @sa parseError
+     */
     bool parse();
 
     void addOption(const QString & shortName,
@@ -86,13 +110,48 @@ public:
     void showHelp(bool exit = true, int returnCode = 0);
     void showVersion(bool exit = true, int returnCode = 0);
 
+    /**
+     * Standard --help, -h entry
+     */
     static const QCommandLineConfigEntry helpEntry;
+
+    /**
+     * Standard --version, -V entry
+     */
     static const QCommandLineConfigEntry versionEntry;
 
 signals:
+    /**
+     * Signal emitted when a switch is found while parsing
+     * @param name The "longName" of the switch.
+     * @sa parse
+     * @sa addSwitch
+     */
     void switchFound(const QString & name);
+
+    /**
+     * Signal emitted when an option is found while parsing
+     * @param name The "longName" of the switch.
+     * @param value The value of that option
+     * @sa parse
+     * @sa addSwitch
+     */
     void optionFound(const QString & name, const QVariant & value);
+
+    /**
+     * Signal emitted when a param is found while parsing
+     * @param name The "longName" of the switch.
+     * @param value The actual argument
+     * @sa parse
+     * @sa addSwitch
+     */
     void paramFound(const QString & name, const QVariant & value);
+
+    /**
+     * Signal emitted when a parse error is detected
+     * @param error Parse error description
+     * @sa parse
+     */
     void parseError(const QString & error);
 private:
     QCommandLinePrivate d;
