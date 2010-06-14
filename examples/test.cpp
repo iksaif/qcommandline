@@ -9,10 +9,10 @@ Test::Test()
 {
   static const struct QCommandLineConfigEntry conf[] =
     {
-      { QCommandLine::Option, "v", "verbose", "verbose level (0-3)", QCommandLine::Mandatory },
-      { QCommandLine::Switch, "l", "list", "show a list", QCommandLine::Optional },
-      { QCommandLine::Param, NULL, "target", "the target", QCommandLine::Mandatory },
-      { QCommandLine::Param, NULL, "source", "the sources", QCommandLine::MandatoryMultiple },
+      { QCommandLine::Option, "v", "verbose", "Verbose level (0-3)", QCommandLine::Mandatory },
+      { QCommandLine::Switch, "l", "list", "Show a list", QCommandLine::Optional },
+      { QCommandLine::Param, NULL, "target", "The target", QCommandLine::Mandatory },
+      { QCommandLine::Param, NULL, "source", "The sources", QCommandLine::MandatoryMultiple },
       { QCommandLine::None, NULL, NULL, NULL, QCommandLine::Default }
     };
   /*

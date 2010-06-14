@@ -7,9 +7,9 @@
 
 #include "qcommandline.h"
 
-const QCommandLineConfigEntry QCommandLine::helpEntry = { QCommandLine::Switch, "h", "help", "display this help and exit", QCommandLine::Optional };
+const QCommandLineConfigEntry QCommandLine::helpEntry = { QCommandLine::Switch, "h", "help", "Display this help and exit", QCommandLine::Optional };
 
-const QCommandLineConfigEntry QCommandLine::versionEntry = { QCommandLine::Switch, "V", "version", "display version and exit", QCommandLine::Optional };
+const QCommandLineConfigEntry QCommandLine::versionEntry = { QCommandLine::Switch, "V", "version", "Display version and exit", QCommandLine::Optional };
 
 QCommandLine::QCommandLine(QObject * parent)
   : QObject(parent)
@@ -396,7 +396,7 @@ QCommandLine::help(bool logo)
 
   if (logo)
     h = version() + "\n";
-  h = "Usage: ";
+  h = "Usage:\n   ";
   /* Executable name */
   if (!d.args.isEmpty())
     h += QFileInfo(d.args[0]).baseName();
@@ -422,17 +422,37 @@ QCommandLine::help(bool logo)
   }
   h.append("\n\n");
 
-  h.append("Mandatory arguments to long options are mandatory for short options too.\n");
+  h.append("Options:\n");
+
+  QStringList vals;
+  QStringList descrs;
+  int max = 0;
 
   foreach (QCommandLineConfigEntry entry, d.config) {
+    QString val;
+
     if (entry.type == QCommandLine::Option)
-      h.append("  -" + entry.shortName + ",--" + entry.longName + "=<val>");
+      val = "-" + entry.shortName + ",--" + entry.longName + "=<val>";
     if (entry.type == QCommandLine::Switch)
-      h.append("  -" + entry.shortName + ",--" + entry.longName);
+      val = "-" + entry.shortName + ",--" + entry.longName;
     if (entry.type == QCommandLine::Param)
-      h.append("   " + entry.longName);
-    h.append("\t" + entry.descr + "\n");
+      val = entry.longName;
+
+    if (val.size() > max)
+      max = val.size();
+
+    vals.append(val);
+    descrs.append(entry.descr + "\n");
   }
+
+  for (int i = 0; i < vals.size(); ++i) {
+    h.append(QString("  "));
+    h.append(vals[i]);
+    h.append(QString(" ").repeated(max - vals[i].size() + 2));
+    h.append(descrs[i]);
+  }
+
+  h.append("\nMandatory arguments to long options are mandatory for short options too.\n");
 
   return h;
 }
