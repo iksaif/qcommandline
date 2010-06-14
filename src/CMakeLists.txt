@@ -20,7 +20,8 @@ include_directories (./)
 install(FILES
   QCommandLine
   qcommandline.h
-  DESTINATION ${INCLUDE_INSTALL_DIR}/qcommandline COMPONENT Devel
+  DESTINATION ${INCLUDE_INSTALL_DIR}/qcommandline
+  COMPONENT devel
 )
 
 set(qcommandline_MOC_HDRS qcommandline.h)
@@ -39,6 +40,7 @@ set_target_properties(qcommandline PROPERTIES
                       )
 
 INSTALL(TARGETS qcommandline
+   COMPONENT libraries
    LIBRARY DESTINATION ${LIB_INSTALL_DIR}
    RUNTIME DESTINATION bin
    ARCHIVE DESTINATION ${LIB_INSTALL_DIR}

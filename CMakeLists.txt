@@ -47,14 +47,14 @@ FIND_PACKAGE( Qt4 REQUIRED )
 
 #add extra search paths for libraries and includes
 SET (LIB_SUFFIX "" CACHE STRING "Define suffix of directory name (32/64)" )
-SET (LIB_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX}" CACHE STRING "Directory where lib will install")
-SET (INCLUDE_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/include" CACHE PATH "The directory the headers are installed in")
-SET (CMAKE_MODULES_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/share/apps/cmake/modules" CACHE PATH "The directory to install FindQRpc.cmake to")
+SET (LIB_INSTALL_DIR "lib${LIB_SUFFIX}" CACHE STRING "Directory where lib will install")
+SET (INCLUDE_INSTALL_DIR "include" CACHE PATH "The directory the headers are installed in")
+SET (CMAKE_MODULES_INSTALL_DIR "share/apps/cmake/modules" CACHE PATH "The directory to install FindQRpc.cmake to")
 
 
 set(QCOMMANDLINE_LIB_MAJOR_VERSION "0")
-set(QCOMMANDLINE_LIB_MINOR_VERSION "0")
-set(QCOMMANDLINE_LIB_PATCH_VERSION "1")
+set(QCOMMANDLINE_LIB_MINOR_VERSION "1")
+set(QCOMMANDLINE_LIB_PATCH_VERSION "0")
 
 set(QCOMMANDLINE_LIB_VERSION_STRING "${QCOMMANDLINE_LIB_MAJOR_VERSION}.${QCOMMANDLINE_LIB_MINOR_VERSION}.${QCOMMANDLINE_LIB_PATCH_VERSION}")
 
@@ -66,7 +66,8 @@ IF (NOT WIN32)
                   ${CMAKE_CURRENT_BINARY_DIR}/QCommandLine.pc
                   @ONLY)
   INSTALL (FILES ${CMAKE_CURRENT_BINARY_DIR}/QCommandLine.pc
-           DESTINATION lib${LIB_SUFFIX}/pkgconfig)
+           DESTINATION lib${LIB_SUFFIX}/pkgconfig
+	   COMPONENT devel)
 ENDIF (NOT WIN32)
 
 # Include the cmake file needed to use qt4
@@ -79,3 +80,44 @@ IF (QCOMMANDLINE_BUILD_EXAMPLES)
 ENDIF ()
 
 add_subdirectory(cmake/modules)
+
+set(CPACK_VERSION_MAJOR ${QCOMMANDLINE_LIB_MAJOR_VERSION})
+set(CPACK_VERSION_MINOR ${QCOMMANDLINE_LIB_MINOR_VERSION})
+set(CPACK_VERSION_PATCH ${QCOMMANDLINE_LIB_PATCH_VERSION})
+set(CPACK_VERSION ${QCOMMANDLINE_LIB_VERSION_STRING})
+set(CPACK_PACKAGE_VERSION ${QCOMMANDLINE_LIB_VERSION_STRING})
+set(CPACK_PACKAGE_CONTACT "Corentin Chary <corentin.chary@gmail.com>")
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/COPYING")
+set(CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/README")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A library for using thetvdb.com XML API in Qt")
+set(CPACK_PACKAGE_VENDOR "http://xf.iksaif.net/dev/qcommandline.html")
+set(CPACK_SOURCE_IGNORE_FILES
+  "~$"
+  "^${PROJECT_SOURCE_DIR}/\\\\.git"
+  "^${PROJECT_SOURCE_DIR}/build/"
+  "^${PROJECT_SOURCE_DIR}/doc/")
+#set(CPACK_INSTALL_CMAKE_PROJECTS "${CMAKE_CURRENT_BUILD_DIR};qcommandline;ALL;/")
+set(CPACK_COMPONENTS_ALL libraries devel)
+set(CPACK_COMPONENT_LIBRARIES_DISPLAY_NAME "Library")
+set(CPACK_COMPONENT_DEVEL_DISPLAY_NAME "Development files")
+set(CPACK_COMPONENT_LIBRARIES_DESCRIPTION "A Command line parser for Qt")
+set(CPACK_COMPONENT_DEVEL_DESCRIPTION "Development files for Qcommandline")
+set(CPACK_COMPONENT_DEVEL_DEPENDS libraries)
+set(CPACK_PACKAGE_FILE_NAME "qcommandline-${CPACK_VERSION}-${CMAKE_SYSTEM_NAME}")
+set(CPACK_SOURCE_PACKAGE_FILE_NAME "qcommandline-${CPACK_VERSION}")
+
+if(NOT WIN32)
+  set(CPACK_GENERATOR "DEB")
+  set(CPACK_SOURCE_GENERATOR "TGZ;TBZ2")
+  ## Debian specific ##
+  set(CPACK_DEBIAN_PACKAGE_DEPENDS "libqt4-core (>= 4.6)")
+  set(CPACK_DEBIAN_PACKAGE_BUILDS_DEPENDS "libqt4-dev (>= 4.6), cmake (>= 2.6)")
+else()
+  set(CPACK_GENERATOR "ZIP")
+  set(CPACK_SOURCE_GENERATOR "ZIP")
+  set(CPACK_BINARY_NSIS "OFF") # TODO,  create an installer
+  set(CPACK_BINARY_CYGWIN "OFF")
+  set(CPACK_SOURCE_CYGWIN "OFF")
+endif()
+
+include(CPack)
