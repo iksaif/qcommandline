@@ -329,6 +329,9 @@ private:
     Q_DECLARE_PRIVATE(QCommandLine);
 };
 
+/**
+ * @brief Configuration entry structure
+ */
 struct QCommandLineConfigEntry {
     /**
      * Entry Type
