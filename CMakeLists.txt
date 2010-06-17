@@ -92,8 +92,7 @@ set(CPACK_PACKAGE_VENDOR "http://xf.iksaif.net/dev/qcommandline.html")
 set(CPACK_SOURCE_IGNORE_FILES
   "~$"
   "^${PROJECT_SOURCE_DIR}/\\\\.git"
-  "^${PROJECT_SOURCE_DIR}/build/"
-  "^${PROJECT_SOURCE_DIR}/doc/")
+  "^${PROJECT_SOURCE_DIR}/build/")
 #set(CPACK_INSTALL_CMAKE_PROJECTS "${CMAKE_CURRENT_BUILD_DIR};qcommandline;ALL;/")
 set(CPACK_COMPONENTS_ALL libraries devel)
 set(CPACK_COMPONENT_LIBRARIES_DISPLAY_NAME "Library")
