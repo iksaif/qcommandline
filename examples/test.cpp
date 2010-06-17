@@ -9,11 +9,11 @@ Test::Test()
 {
   static const struct QCommandLineConfigEntry conf[] =
     {
-      { QCommandLine::Option, "v", "verbose", "Verbose level (0-3)", QCommandLine::Mandatory },
-      { QCommandLine::Switch, "l", "list", "Show a list", QCommandLine::Optional },
-      { QCommandLine::Param, NULL, "target", "The target", QCommandLine::Mandatory },
-      { QCommandLine::Param, NULL, "source", "The sources", QCommandLine::MandatoryMultiple },
-      { QCommandLine::None, NULL, NULL, NULL, QCommandLine::Default }
+      { QCommandLine::Option, 'v', "verbose", "Verbose level (0-3)", QCommandLine::Mandatory },
+      { QCommandLine::Switch, 'l', "list", "Show a list", QCommandLine::Optional },
+      { QCommandLine::Param, '\0', "target", "The target", QCommandLine::Mandatory },
+      { QCommandLine::Param, '\0', "source", "The sources", QCommandLine::MandatoryMultiple },
+      QCOMMANDLINE_CONFIG_ENTRY_END
     };
   /*
    * Similar to:
@@ -43,25 +43,26 @@ Test::Test()
 void
 Test::switchFound(const QString & name)
 {
-  qDebug() << "Switch:" << name;
+  qWarning() << "Switch:" << name;
 }
 
 void
 Test::optionFound(const QString & name, const QVariant & value)
 {
-  qDebug() << "Option:" << name << value;
+  qWarning() << "Option:" << name << value.toString();
 }
 
 void
 Test::paramFound(const QString & name, const QVariant & value)
 {
-  qDebug() << "Param:" << name << value;
+  qWarning() << "Param:" << name << value.toString();
 }
 
 void
 Test::parseError(const QString & error)
 {
-  qDebug() << qPrintable(error);
+  qWarning() << "cool";
+  qWarning() << qPrintable(error);
   cmdline->showHelp(true, -1);
   QCoreApplication::quit();
 }
