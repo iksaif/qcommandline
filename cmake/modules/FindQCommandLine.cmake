@@ -1,4 +1,4 @@
-# Find QCOMMANDLINE - WEBDAV handling library for Qt
+# Find QCOMMANDLINE - Command line handling library for Qt
 #
 # This module defines
 #  QCOMMANDLINE_FOUND - whether the qsjon library was found
