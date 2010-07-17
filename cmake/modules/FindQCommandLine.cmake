@@ -1,7 +1,7 @@
 # Find QCOMMANDLINE - Command line handling library for Qt
 #
 # This module defines
-#  QCOMMANDLINE_FOUND - whether the qsjon library was found
+#  QCOMMANDLINE_FOUND - whether the qcommand library was found
 #  QCOMMANDLINE_LIBRARIES - the qcommandline library
 #  QCOMMANDLINE_INCLUDE_DIR - the include path of the qcommandline library
 #
