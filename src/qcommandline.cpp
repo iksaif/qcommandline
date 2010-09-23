@@ -12,7 +12,7 @@ const QCommandLineConfigEntry QCommandLine::helpEntry = { QCommandLine::Switch, 
 const QCommandLineConfigEntry QCommandLine::versionEntry = { QCommandLine::Switch, QLatin1Char('V'), QLatin1String("version"), tr("Display version and exit"), QCommandLine::Optional };
 
 QCommandLine::QCommandLine(QObject * parent)
-  : QObject(parent)
+  : QObject(parent), d(new QCommandLinePrivate)
 {
   setArguments(QCoreApplication::instance()->arguments());
 }
@@ -20,7 +20,7 @@ QCommandLine::QCommandLine(QObject * parent)
 QCommandLine::QCommandLine(const QCoreApplication & app,
 			   const QCommandLineConfig & config,
 			   QObject * parent)
-  : QObject(parent)
+  : QObject(parent), d(new QCommandLinePrivate)
 {
   setArguments(app.arguments());
   setConfig(config);
@@ -31,7 +31,7 @@ QCommandLine::QCommandLine(const QCoreApplication & app,
 QCommandLine::QCommandLine(int argc, char *argv[],
 			   const QCommandLineConfig & config,
 			   QObject * parent)
-  : QObject(parent)
+  : QObject(parent), d(new QCommandLinePrivate)
 {
   setArguments(argc, argv);
   setConfig(config);
@@ -42,7 +42,7 @@ QCommandLine::QCommandLine(int argc, char *argv[],
 QCommandLine::QCommandLine(const QStringList args,
 			   const QCommandLineConfig & config,
 			   QObject * parent)
-  : QObject(parent)
+  : QObject(parent), d(new QCommandLinePrivate)
 {
   setArguments(args);
   setConfig(config);
@@ -52,21 +52,22 @@ QCommandLine::QCommandLine(const QStringList args,
 
 QCommandLine::~QCommandLine()
 {
+  delete d;
 }
 
 void
 QCommandLine::setConfig(const QCommandLineConfig & config)
 {
-  d.config = config;
+  d->config = config;
 }
 
 void
 QCommandLine::setConfig(const QCommandLineConfigEntry config[])
 {
-  d.config.clear();
+  d->config.clear();
 
   while (config->type) {
-    d.config << *config;
+    d->config << *config;
     config++;
   }
 }
@@ -74,51 +75,51 @@ QCommandLine::setConfig(const QCommandLineConfigEntry config[])
 QCommandLineConfig
 QCommandLine::config()
 {
-  return d.config;
+  return d->config;
 }
 
 void
 QCommandLine::setArguments(int argc, char *argv[])
 {
-  d.args.clear();
+  d->args.clear();
   for (int i = 0; i < argc; i++)
-    d.args.append(QLatin1String(argv[i]));
+    d->args.append(QLatin1String(argv[i]));
 }
 
 void
 QCommandLine::setArguments(QStringList args)
 {
-  d.args = args;
+  d->args = args;
 }
 
 QStringList
 QCommandLine::arguments()
 {
-  return d.args;
+  return d->args;
 }
 
 void
 QCommandLine::enableHelp(bool enable)
 {
-  d.help = enable;
+  d->help = enable;
 }
 
 bool
 QCommandLine::helpEnabled()
 {
-  return d.help;
+  return d->help;
 }
 
 void
 QCommandLine::enableVersion(bool enable)
 {
-  d.version = enable;
+  d->version = enable;
 }
 
 bool
 QCommandLine::versionEnabled()
 {
-  return d.version;
+  return d->version;
 }
 
 bool
@@ -129,11 +130,11 @@ QCommandLine::parse()
   QQueue < QCommandLineConfigEntry > params;
   QMap < QString, QList < QString > > optionsFound;
   QMap < QString, int > switchsFound;
-  QStringList args = d.args;
+  QStringList args = d->args;
 
   bool allparam = false;
 
-  foreach (QCommandLineConfigEntry entry, d.config) {
+  foreach (QCommandLineConfigEntry entry, d->config) {
     if (entry.type != QCommandLine::Param && entry.shortName == QLatin1Char('\0'))
       qWarning() << QLatin1String("QCommandLine: Empty shortname detected");
     if (entry.longName.isEmpty())
@@ -150,12 +151,12 @@ QCommandLine::parse()
     confLong[entry.longName] = entry;
   }
 
-  if (d.help) {
+  if (d->help) {
     conf[helpEntry.shortName] = helpEntry;
     confLong[helpEntry.longName] = helpEntry;
   }
 
-  if (d.version) {
+  if (d->version) {
     conf[versionEntry.shortName] = versionEntry;
     confLong[versionEntry.longName] = versionEntry;
   }
@@ -288,9 +289,9 @@ QCommandLine::parse()
 
   foreach (QString key, switchsFound.keys()) {
     for (int i = 0; i < switchsFound[key]; i++) {
-      if (d.help && key == helpEntry.longName)
+      if (d->help && key == helpEntry.longName)
 	showHelp();
-      if (d.version && key == versionEntry.longName)
+      if (d->version && key == versionEntry.longName)
 	showVersion();
       emit switchFound(key);
     }
@@ -315,7 +316,7 @@ QCommandLine::addOption(const QChar & shortName,
   entry.longName = longName;
   entry.descr = descr;
   entry.flags = flags;
-  d.config << entry;
+  d->config << entry;
 }
 
 void
@@ -331,7 +332,7 @@ QCommandLine::addSwitch(const QChar & shortName,
   entry.longName = longName;
   entry.descr = descr;
   entry.flags = flags;
-  d.config << entry;
+  d->config << entry;
 }
 
 void
@@ -345,7 +346,7 @@ QCommandLine::addParam(const QString & name,
   entry.longName = name;
   entry.descr = descr;
   entry.flags = flags;
-  d.config << entry;
+  d->config << entry;
 }
 
 void
@@ -353,10 +354,10 @@ QCommandLine::removeOption(const QString & name)
 {
   int i;
 
-  for (i = 0; i < d.config.size(); ++i) {
-    if (d.config[i].type == QCommandLine::Option &&
-	(d.config[i].shortName == name.at(0) || d.config[i].longName == name)) {
-      d.config.removeAt(i);
+  for (i = 0; i < d->config.size(); ++i) {
+    if (d->config[i].type == QCommandLine::Option &&
+	(d->config[i].shortName == name.at(0) || d->config[i].longName == name)) {
+      d->config.removeAt(i);
       return ;
     }
   }
@@ -367,10 +368,10 @@ QCommandLine::removeSwitch(const QString & name)
 {
   int i;
 
-  for (i = 0; i < d.config.size(); ++i) {
-    if (d.config[i].type == QCommandLine::Switch &&
-	(d.config[i].shortName == name.at(0) || d.config[i].longName == name)) {
-      d.config.removeAt(i);
+  for (i = 0; i < d->config.size(); ++i) {
+    if (d->config[i].type == QCommandLine::Switch &&
+	(d->config[i].shortName == name.at(0) || d->config[i].longName == name)) {
+      d->config.removeAt(i);
       return ;
     }
   }
@@ -381,10 +382,10 @@ QCommandLine::removeParam(const QString & name)
 {
   int i;
 
-  for (i = 0; i < d.config.size(); ++i) {
-    if (d.config[i].type == QCommandLine::Param &&
-	(d.config[i].shortName == name.at(0) || d.config[i].longName == name)) {
-      d.config.removeAt(i);
+  for (i = 0; i < d->config.size(); ++i) {
+    if (d->config[i].type == QCommandLine::Param &&
+	(d->config[i].shortName == name.at(0) || d->config[i].longName == name)) {
+      d->config.removeAt(i);
       return ;
     }
   }
@@ -400,13 +401,13 @@ QCommandLine::help(bool logo)
     h = version() + QLatin1String("\n");
   h = QLatin1String("Usage:\n   ");
   /* Executable name */
-  if (!d.args.isEmpty())
-    h += QFileInfo(d.args[0]).baseName();
+  if (!d->args.isEmpty())
+    h += QFileInfo(d->args[0]).baseName();
   else
     h += QCoreApplication::applicationName();
   h.append(QLatin1String(" [switchs] [options]"));
   /* Arguments, short */
-  foreach (QCommandLineConfigEntry entry, d.config) {
+  foreach (QCommandLineConfigEntry entry, d->config) {
     if (entry.type == QCommandLine::Option) {
       if (entry.flags & QCommandLine::Mandatory)
 	h.append(QLatin1String(" --") + entry.longName + QLatin1String("=<val>"));
@@ -430,7 +431,7 @@ QCommandLine::help(bool logo)
   QStringList descrs;
   int max = 0;
 
-  foreach (QCommandLineConfigEntry entry, d.config) {
+  foreach (QCommandLineConfigEntry entry, d->config) {
     QString val;
 
     if (entry.type == QCommandLine::Option)

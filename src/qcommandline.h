@@ -325,7 +325,7 @@ signals:
      */
     void parseError(const QString & error);
 private:
-    QCommandLinePrivate d;
+    QCommandLinePrivate *d;
     Q_DECLARE_PRIVATE(QCommandLine);
 };
 
