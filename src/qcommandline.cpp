@@ -179,7 +179,8 @@ QCommandLine::parse()
       shrt = true;
       /* Handle stacked args like `tar -xzf` */
       if (arg.size() > 2) {
-	args[i] = arg.mid(0, 1) + arg.mid(2);
+	args[i] = arg.mid(0, 2);
+	args.insert(i + 1, arg.mid(0, 1) + arg.mid(2));
 	arg = arg.mid(1, 1);
       } else {
 	arg = arg.mid(1);
