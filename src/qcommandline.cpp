@@ -130,6 +130,7 @@ QCommandLine::parse()
   QQueue < QCommandLineConfigEntry > params;
   QMap < QString, QList < QString > > optionsFound;
   QMap < QString, int > switchsFound;
+  QStringList options, switchs;
   QStringList args = d->args;
 
   bool allparam = false;
@@ -228,6 +229,8 @@ QCommandLine::parse()
       QCommandLineConfigEntry & entry = c[key];
 
       if (entry.type == QCommandLine::Switch) {
+	if (!switchsFound.contains(entry.longName))
+	  switchs << entry.longName;
 	if (entry.flags & QCommandLine::Multiple)
 	  switchsFound[entry.longName]++;
 	else
@@ -248,6 +251,8 @@ QCommandLine::parse()
 	  }
 	}
 
+	if (!optionsFound.contains(entry.longName))
+	  options << entry.longName;
 	if (!(entry.flags & QCommandLine::Multiple))
 	  optionsFound[entry.longName].clear();
 	optionsFound[entry.longName].append(value);
@@ -288,7 +293,7 @@ QCommandLine::parse()
     }
   }
 
-  foreach (QString key, switchsFound.keys()) {
+  foreach (QString key, switchs) {
     for (int i = 0; i < switchsFound[key]; i++) {
       if (d->help && key == helpEntry.longName)
 	showHelp();
@@ -298,7 +303,7 @@ QCommandLine::parse()
     }
   }
 
-  foreach (QString key, optionsFound.keys()) {
+  foreach (QString key, options) {
     foreach (QString opt, optionsFound[key])
       emit optionFound(key, opt);
   }  return true;
