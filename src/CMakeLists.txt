@@ -1,4 +1,4 @@
-# Copyright (C) 2009-2010 Corentin Chary <corentin.chary@gmail.com>
+# Copyright (C) 2009-2011 Corentin Chary <corentin.chary@gmail.com>
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -36,18 +36,18 @@ qt4_wrap_cpp(qcommandline_MOC_SRCS ${qcommandline_MOC_HDRS})
 
 set (qcommandline_SRCS qcommandline.cpp)
 
-add_library (qcommandline SHARED ${qcommandline_SRCS} ${qcommandline_MOC_SRCS})
+add_library (qcommandline ${qcommandline_SRCS} ${qcommandline_MOC_SRCS})
 target_link_libraries( qcommandline ${QT_LIBRARIES})
 
 set_target_properties(qcommandline PROPERTIES
-                      VERSION ${QCOMMANDLINE_LIB_MAJOR_VERSION}.${QCOMMANDLINE_LIB_MINOR_VERSION}.${QCOMMANDLINE_LIB_PATCH_VERSION}
-                      SOVERSION ${QCOMMANDLINE_LIB_MAJOR_VERSION}
-                      DEFINE_SYMBOL QCOMMANDLINE_MAKEDLL
-                      )
+  VERSION ${QCOMMANDLINE_LIB_MAJOR_VERSION}.${QCOMMANDLINE_LIB_MINOR_VERSION}.${QCOMMANDLINE_LIB_PATCH_VERSION}
+  SOVERSION ${QCOMMANDLINE_LIB_MAJOR_VERSION}
+  DEFINE_SYMBOL QCOMMANDLINE_MAKEDLL
+)
 
-INSTALL(TARGETS qcommandline
-   COMPONENT libraries
-   LIBRARY DESTINATION ${LIB_INSTALL_DIR}
-   RUNTIME DESTINATION bin
-   ARCHIVE DESTINATION ${LIB_INSTALL_DIR}
+install(TARGETS qcommandline
+  COMPONENT libraries
+  LIBRARY DESTINATION ${LIB_INSTALL_DIR}
+  RUNTIME DESTINATION bin
+  ARCHIVE DESTINATION ${LIB_INSTALL_DIR}
 )

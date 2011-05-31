@@ -1,4 +1,4 @@
-# Copyright (C) 2009-2010 Corentin Chary <corentin.chary@gmail.com>
+# Copyright (C) 2009-2011 Corentin Chary <corentin.chary@gmail.com>
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -15,40 +15,46 @@
 # the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 # Boston, MA 02110-1301, USA.
 
-PROJECT(qcommandline)
+project(qcommandline)
 
 # Stop cmake 2.6 from whining
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
-IF(COMMAND cmake_policy)
-  CMAKE_POLICY(SET CMP0003 NEW)
-ENDIF(COMMAND cmake_policy)
+cmake_minimum_required(VERSION 2.6)
+if(COMMAND cmake_policy)
+  cmake_policy(SET CMP0003 NEW)
+endif(COMMAND cmake_policy)
+
+include(CMakeDependentOption)
 
 # where to look first for cmake modules, before ${CMAKE_ROOT}/Modules/ is checked
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules")
+if(CMAKE_SYSTEM_NAME MATCHES Linux)
+  set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} /usr/share/apps/cmake/modules/)
+endif()
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules/)
 
-set(CMAKE_INSTALL_NAME_DIR ${LIB_INSTALL_DIR})
+option(BUILD_SHARED_LIBS "build shared libs [default: on]" ON)
+option(QCOMMANDLINE_BUILD_EXAMPLES "build examples [default: off]" OFF)
 
-# compile in debug mode
-IF(NOT CMAKE_BUILD_TYPE)
-  SET(CMAKE_BUILD_TYPE RelWithDebInfo CACHE STRING
+# compile in release mode with debug infos
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE RelWithDebInfo CACHE STRING
       "Choose the type of build, options are: None Debug Release RelWithDebInfo MinSizeRel."
       FORCE)
-ENDIF(NOT CMAKE_BUILD_TYPE)
+endif(NOT CMAKE_BUILD_TYPE)
 
-IF("${CMAKE_BUILD_TYPE}" MATCHES "^Rel.*")
-  ADD_DEFINITIONS("-DQT_NO_DEBUG_OUTPUT")
-  ADD_DEFINITIONS("-DQT_NO_DEBUG_OUTPUT")
-ENDIF("${CMAKE_BUILD_TYPE}" MATCHES "^Rel.*")
+if("${CMAKE_BUILD_TYPE}" MATCHES "^Rel.*")
+  add_definitions("-DQT_NO_DEBUG_OUTPUT")
+endif("${CMAKE_BUILD_TYPE}" MATCHES "^Rel.*")
 
 # Find Qt4
-FIND_PACKAGE( Qt4 REQUIRED )
+find_package( Qt4 REQUIRED )
+
+set( QT_DONT_USE_QTGUI TRUE )
 
 #add extra search paths for libraries and includes
-SET (LIB_SUFFIX "" CACHE STRING "Define suffix of directory name (32/64)" )
-SET (LIB_INSTALL_DIR "lib${LIB_SUFFIX}" CACHE STRING "Directory where lib will install")
-SET (INCLUDE_INSTALL_DIR "include" CACHE PATH "The directory the headers are installed in")
-SET (CMAKE_MODULES_INSTALL_DIR "share/apps/cmake/modules" CACHE PATH "The directory to install FindQCommandLine.cmake to")
-
+set (LIB_SUFFIX "" CACHE STRING "Define suffix of directory name (32/64)" )
+set (LIB_INSTALL_DIR "lib${LIB_SUFFIX}" CACHE STRING "Directory where lib will install")
+set (INCLUDE_INSTALL_DIR "include" CACHE PATH "The directory the headers are installed in")
+set (CMAKE_MODULES_INSTALL_DIR "share/apps/cmake/modules" CACHE PATH "The directory to install FindQCommandLine.cmake to")
 
 set(QCOMMANDLINE_LIB_MAJOR_VERSION "0")
 set(QCOMMANDLINE_LIB_MINOR_VERSION "2")
@@ -59,23 +65,23 @@ set(QCOMMANDLINE_LIB_VERSION_STRING "${QCOMMANDLINE_LIB_MAJOR_VERSION}.${QCOMMAN
 set(LIBRARY_OUTPUT_PATH "${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}" )
 
 # pkg-config
-IF (NOT WIN32)
-  CONFIGURE_FILE (${CMAKE_CURRENT_SOURCE_DIR}/QCommandLine.pc.in
+if (NOT WIN32)
+  configure_file (${CMAKE_CURRENT_SOURCE_DIR}/QCommandLine.pc.in
                   ${CMAKE_CURRENT_BINARY_DIR}/QCommandLine.pc
                   @ONLY)
-  INSTALL (FILES ${CMAKE_CURRENT_BINARY_DIR}/QCommandLine.pc
+  install (FILES ${CMAKE_CURRENT_BINARY_DIR}/QCommandLine.pc
            DESTINATION lib${LIB_SUFFIX}/pkgconfig
 	   COMPONENT devel)
-ENDIF (NOT WIN32)
+endif (NOT WIN32)
 
 # Include the cmake file needed to use qt4
-INCLUDE( ${QT_USE_FILE} )
+include( ${QT_USE_FILE} )
 
 # Subdirs
-ADD_SUBDIRECTORY(src)
-IF (QCOMMANDLINE_BUILD_EXAMPLES)
-  ADD_SUBDIRECTORY(examples)
-ENDIF ()
+add_subdirectory(src)
+if (QCOMMANDLINE_BUILD_EXAMPLES)
+  add_subdirectory(examples)
+endif ()
 
 add_subdirectory(cmake/modules)
 
@@ -104,7 +110,7 @@ set(CPACK_PACKAGE_FILE_NAME "qcommandline-${CPACK_VERSION}-${CMAKE_SYSTEM_NAME}"
 set(CPACK_SOURCE_PACKAGE_FILE_NAME "qcommandline-${CPACK_VERSION}")
 
 if(NOT WIN32)
-  set(CPACK_GENERATOR "DEB")
+  set(CPACK_GENERATOR "DEB;TGZ;TBZ2")
   set(CPACK_SOURCE_GENERATOR "TGZ;TBZ2")
   ## Debian specific ##
   set(CPACK_DEBIAN_PACKAGE_DEPENDS "libqt4-core (>= 4.6)")
