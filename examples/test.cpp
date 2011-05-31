@@ -61,7 +61,6 @@ Test::paramFound(const QString & name, const QVariant & value)
 void
 Test::parseError(const QString & error)
 {
-  qWarning() << "cool";
   qWarning() << qPrintable(error);
   cmdline->showHelp(true, -1);
   QCoreApplication::quit();
