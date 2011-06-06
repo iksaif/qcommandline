@@ -39,7 +39,8 @@ class QCoreApplication;
 struct QCommandLineConfigEntry;
 typedef QList< QCommandLineConfigEntry > QCommandLineConfig;
 
-struct QCommandLinePrivate {
+class QCommandLinePrivate {
+public:
     bool version;
     bool help;
     QStringList args;
