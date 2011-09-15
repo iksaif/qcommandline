@@ -19,9 +19,6 @@ project(qcommandline)
 
 # Stop cmake 2.6 from whining
 cmake_minimum_required(VERSION 2.6)
-if(COMMAND cmake_policy)
-  cmake_policy(SET CMP0003 NEW)
-endif(COMMAND cmake_policy)
 
 include(CMakeDependentOption)
 
@@ -53,6 +50,7 @@ set( QT_DONT_USE_QTGUI TRUE )
 #add extra search paths for libraries and includes
 set (LIB_SUFFIX "" CACHE STRING "Define suffix of directory name (32/64)" )
 set (LIB_INSTALL_DIR "lib${LIB_SUFFIX}" CACHE STRING "Directory where lib will install")
+set (BIN_INSTALL_DIR "bin" CACHE STRING "Directory where bin will install")
 set (INCLUDE_INSTALL_DIR "include" CACHE PATH "The directory the headers are installed in")
 set (CMAKE_MODULES_INSTALL_DIR "share/apps/cmake/modules" CACHE PATH "The directory to install FindQCommandLine.cmake to")
 
