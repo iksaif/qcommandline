@@ -25,13 +25,18 @@
 #include <QtCore/QStringList>
 
 #ifndef QCOMMANDLINE_EXPORT
-# if defined(QCOMMANDLINE_MAKEDLL)
-   /* We are building this library */
-#  define QCOMMANDLINE_EXPORT Q_DECL_EXPORT
-# else
-   /* We are using this library */
-#  define QCOMMANDLINE_EXPORT Q_DECL_IMPORT
+# ifndef QCOMMANDLINE_STATIC
+#  if defined(QCOMMANDLINE_MAKEDLL)
+    /* We are building this library */
+#   define QCOMMANDLINE_EXPORT Q_DECL_EXPORT
+#  else
+    /* We are using this library */
+#   define QCOMMANDLINE_EXPORT Q_DECL_IMPORT
+#  endif
 # endif
+#endif
+#ifndef QCOMMANDLINE_EXPORT
+# define QCOMMANDLINE_EXPORT
 #endif
 
 class QCoreApplication;

@@ -39,11 +39,15 @@ set (qcommandline_SRCS qcommandline.cpp)
 add_library (qcommandline ${qcommandline_SRCS} ${qcommandline_MOC_SRCS})
 target_link_libraries( qcommandline ${QT_LIBRARIES})
 
-set_target_properties(qcommandline PROPERTIES
-  VERSION ${QCOMMANDLINE_LIB_MAJOR_VERSION}.${QCOMMANDLINE_LIB_MINOR_VERSION}.${QCOMMANDLINE_LIB_PATCH_VERSION}
-  SOVERSION ${QCOMMANDLINE_LIB_MAJOR_VERSION}
-  DEFINE_SYMBOL QCOMMANDLINE_MAKEDLL
-)
+if(BUILD_SHARED_LIBS)
+  set_target_properties(qcommandline PROPERTIES
+    VERSION ${QCOMMANDLINE_LIB_MAJOR_VERSION}.${QCOMMANDLINE_LIB_MINOR_VERSION}.${QCOMMANDLINE_LIB_PATCH_VERSION}
+    SOVERSION ${QCOMMANDLINE_LIB_MAJOR_VERSION}
+    DEFINE_SYMBOL QCOMMANDLINE_MAKEDLL
+  )
+else()
+	add_definitions(-DQCOMMANDLINE_STATIC)
+endif()
 
 install(TARGETS qcommandline
   COMPONENT libraries
