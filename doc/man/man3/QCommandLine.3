@@ -1,4 +1,4 @@
-.TH "QCommandLine" 3 "Wed Apr 20 2011" "Version 0.2.0" "QCommandLine" \" -*- nroff -*-
+.TH "QCommandLine" 3 "Sun Oct 16 2011" "Version 0.3.0" "QCommandLine" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -133,7 +133,7 @@ Main class used to convert parse command line.
 .PP 
 Main class used to convert parse command line. 
 .PP
-Definition at line 39 of file qcommandline.h.
+Definition at line 64 of file qcommandline.h.
 .SH "Member Enumeration Documentation"
 .PP 
 .SS "enum \fBQCommandLine::Flags\fP"Flags that can be applied to a \fBQCommandLineConfigEntry\fP 
@@ -153,7 +153,7 @@ optional argument
 \fB\fIMultiple \fP\fP
 argument can be used multiple time and will produce multiple signals. 
 .PP
-Definition at line 56 of file qcommandline.h.
+Definition at line 81 of file qcommandline.h.
 .SS "enum \fBQCommandLine::Type\fP"Enum used to determine entry type in \fBQCommandLineConfigEntry\fP 
 .PP
 \fBEnumerator: \fP
@@ -171,12 +171,12 @@ an option with an argument (eg: tar -f test.tar)
 \fB\fIParam \fP\fP
 a parameter without '-' delimiter (eg: cp foo bar) 
 .PP
-Definition at line 46 of file qcommandline.h.
+Definition at line 71 of file qcommandline.h.
 .SH "Constructor & Destructor Documentation"
 .PP 
 .SS "QCommandLine::QCommandLine (QObject *parent = \fC0\fP)"\fBQCommandLine\fP constructor QCoreApplication::instance()->\fBarguments()\fP will be called to get the arguments. 
 .PP
-Definition at line 14 of file qcommandline.cpp.
+Definition at line 34 of file qcommandline.cpp.
 .SS "QCommandLine::QCommandLine (const QCoreApplication &app, const QCommandLineConfig &config = \fCQCommandLineConfig()\fP, QObject *parent = \fC0\fP)"\fBQCommandLine\fP constructor 
 .PP
 \fBParameters:\fP
@@ -195,7 +195,7 @@ Definition at line 14 of file qcommandline.cpp.
 .PP
 
 .PP
-Definition at line 20 of file qcommandline.cpp.
+Definition at line 40 of file qcommandline.cpp.
 .SS "QCommandLine::QCommandLine (intargc, char *argv[], const QCommandLineConfig &config = \fCQCommandLineConfig()\fP, QObject *parent = \fC0\fP)"\fBQCommandLine\fP constructor 
 .PP
 \fBParameters:\fP
@@ -218,7 +218,7 @@ Definition at line 20 of file qcommandline.cpp.
 .PP
 
 .PP
-Definition at line 31 of file qcommandline.cpp.
+Definition at line 51 of file qcommandline.cpp.
 .SS "QCommandLine::QCommandLine (const QStringListargs, const QCommandLineConfig &config = \fCQCommandLineConfig()\fP, QObject *parent = \fC0\fP)"\fBQCommandLine\fP constructor 
 .PP
 \fBParameters:\fP
@@ -239,10 +239,10 @@ Definition at line 31 of file qcommandline.cpp.
 .PP
 
 .PP
-Definition at line 42 of file qcommandline.cpp.
+Definition at line 62 of file qcommandline.cpp.
 .SS "QCommandLine::~QCommandLine ()"\fBQCommandLine\fP destructor 
 .PP
-Definition at line 53 of file qcommandline.cpp.
+Definition at line 73 of file qcommandline.cpp.
 .SH "Member Function Documentation"
 .PP 
 .SS "void QCommandLine::addOption (const QChar &shortName, const QString &longName = \fCQString()\fP, const QString &descr = \fCQString()\fP, \fBQCommandLine::Flags\fPflags = \fCQCommandLine::Optional\fP)"Define a new option 
@@ -267,7 +267,7 @@ Definition at line 53 of file qcommandline.cpp.
 .PP
 
 .PP
-Definition at line 313 of file qcommandline.cpp.
+Definition at line 333 of file qcommandline.cpp.
 .SS "void QCommandLine::addParam (const QString &name, const QString &descr = \fCQString()\fP, \fBQCommandLine::Flags\fPflags = \fCQCommandLine::Optional\fP)"Define a new parameter 
 .PP
 \fBParameters:\fP
@@ -288,7 +288,7 @@ Definition at line 313 of file qcommandline.cpp.
 .PP
 
 .PP
-Definition at line 345 of file qcommandline.cpp.
+Definition at line 365 of file qcommandline.cpp.
 .SS "void QCommandLine::addSwitch (const QChar &shortName, const QString &longName = \fCQString()\fP, const QString &descr = \fCQString()\fP, \fBQCommandLine::Flags\fPflags = \fCQCommandLine::Optional\fP)"Define a new switch 
 .PP
 \fBParameters:\fP
@@ -311,7 +311,7 @@ Definition at line 345 of file qcommandline.cpp.
 .PP
 
 .PP
-Definition at line 329 of file qcommandline.cpp.
+Definition at line 349 of file qcommandline.cpp.
 .SS "QStringList QCommandLine::arguments ()"Get command line arguments 
 .PP
 \fBReturns:\fP
@@ -326,7 +326,7 @@ Command line arguments (like QApplication::arguments())
 .PP
 
 .PP
-Definition at line 96 of file qcommandline.cpp.
+Definition at line 116 of file qcommandline.cpp.
 .SS "QCommandLineConfig QCommandLine::config ()"Get the current parser configuration 
 .PP
 \fBReturns:\fP
@@ -341,7 +341,7 @@ The parser configuration
 .PP
 
 .PP
-Definition at line 76 of file qcommandline.cpp.
+Definition at line 96 of file qcommandline.cpp.
 .SS "void QCommandLine::enableHelp (boolenable)"Enable --help,-h switch 
 .PP
 \fBParameters:\fP
@@ -356,7 +356,7 @@ Definition at line 76 of file qcommandline.cpp.
 .PP
 
 .PP
-Definition at line 102 of file qcommandline.cpp.
+Definition at line 122 of file qcommandline.cpp.
 .SS "void QCommandLine::enableVersion (boolenable)"Enable --version,-V switch 
 .PP
 \fBParameters:\fP
@@ -371,7 +371,7 @@ Definition at line 102 of file qcommandline.cpp.
 .PP
 
 .PP
-Definition at line 114 of file qcommandline.cpp.
+Definition at line 134 of file qcommandline.cpp.
 .SS "QString QCommandLine::help (boollogo = \fCtrue\fP)"Return the help message 
 .PP
 \fBParameters:\fP
@@ -386,7 +386,7 @@ Definition at line 114 of file qcommandline.cpp.
 .PP
 
 .PP
-Definition at line 402 of file qcommandline.cpp.
+Definition at line 422 of file qcommandline.cpp.
 .SS "bool QCommandLine::helpEnabled ()"Check if help is enabled or not. 
 .PP
 \fBReturns:\fP
@@ -401,7 +401,7 @@ true if help is enabled; otherwise returns false.
 .PP
 
 .PP
-Definition at line 108 of file qcommandline.cpp.
+Definition at line 128 of file qcommandline.cpp.
 .SS "void QCommandLine::optionFound (const QString &name, const QVariant &value)\fC [signal]\fP"Signal emitted when an option is found while parsing 
 .PP
 \fBParameters:\fP
@@ -450,7 +450,7 @@ true if successfully parsed; otherwise returns false.
 .PP
 
 .PP
-Definition at line 126 of file qcommandline.cpp.
+Definition at line 146 of file qcommandline.cpp.
 .SS "void QCommandLine::parseError (const QString &error)\fC [signal]\fP"Signal emitted when a parse error is detected 
 .PP
 \fBParameters:\fP
@@ -480,7 +480,7 @@ Definition at line 126 of file qcommandline.cpp.
 .PP
 
 .PP
-Definition at line 359 of file qcommandline.cpp.
+Definition at line 379 of file qcommandline.cpp.
 .SS "void QCommandLine::removeParam (const QString &name)"Remove any option of type \fBQCommandLine::Param\fP with a given shortName or longName. 
 .PP
 \fBParameters:\fP
@@ -497,7 +497,7 @@ Definition at line 359 of file qcommandline.cpp.
 .PP
 
 .PP
-Definition at line 387 of file qcommandline.cpp.
+Definition at line 407 of file qcommandline.cpp.
 .SS "void QCommandLine::removeSwitch (const QString &name)"Remove any option of type \fBQCommandLine::Switch\fP with a given shortName or longName. 
 .PP
 \fBParameters:\fP
@@ -514,7 +514,7 @@ Definition at line 387 of file qcommandline.cpp.
 .PP
 
 .PP
-Definition at line 373 of file qcommandline.cpp.
+Definition at line 393 of file qcommandline.cpp.
 .SS "void QCommandLine::setArguments (intargc, char *argv[])"Set command line arguments 
 .PP
 \fBParameters:\fP
@@ -531,7 +531,7 @@ Definition at line 373 of file qcommandline.cpp.
 .PP
 
 .PP
-Definition at line 82 of file qcommandline.cpp.
+Definition at line 102 of file qcommandline.cpp.
 .SS "void QCommandLine::setArguments (QStringListargs)"Set command line arguments 
 .PP
 \fBParameters:\fP
@@ -546,7 +546,7 @@ Definition at line 82 of file qcommandline.cpp.
 .PP
 
 .PP
-Definition at line 90 of file qcommandline.cpp.
+Definition at line 110 of file qcommandline.cpp.
 .SS "void QCommandLine::setConfig (const \fBQCommandLineConfigEntry\fPconfig[])"Set the parser configuration 
 .PP
 \fBParameters:\fP
@@ -561,7 +561,7 @@ Definition at line 90 of file qcommandline.cpp.
 .PP
 
 .PP
-Definition at line 65 of file qcommandline.cpp.
+Definition at line 85 of file qcommandline.cpp.
 .SS "void QCommandLine::setConfig (const QCommandLineConfig &config)"Set the parser configuration 
 .PP
 \fBParameters:\fP
@@ -576,7 +576,7 @@ Definition at line 65 of file qcommandline.cpp.
 .PP
 
 .PP
-Definition at line 59 of file qcommandline.cpp.
+Definition at line 79 of file qcommandline.cpp.
 .SS "void QCommandLine::showHelp (boolexit = \fCtrue\fP, intreturnCode = \fC0\fP)"Show the help message. 
 .PP
 \fBParameters:\fP
@@ -593,7 +593,7 @@ Definition at line 59 of file qcommandline.cpp.
 .PP
 
 .PP
-Definition at line 486 of file qcommandline.cpp.
+Definition at line 506 of file qcommandline.cpp.
 .SS "void QCommandLine::showVersion (boolexit = \fCtrue\fP, intreturnCode = \fC0\fP)"Show the version message. 
 .PP
 \fBParameters:\fP
@@ -610,7 +610,7 @@ Definition at line 486 of file qcommandline.cpp.
 .PP
 
 .PP
-Definition at line 496 of file qcommandline.cpp.
+Definition at line 516 of file qcommandline.cpp.
 .SS "void QCommandLine::switchFound (const QString &name)\fC [signal]\fP"Signal emitted when a switch is found while parsing 
 .PP
 \fBParameters:\fP
@@ -635,7 +635,7 @@ Definition at line 496 of file qcommandline.cpp.
 .PP
 
 .PP
-Definition at line 471 of file qcommandline.cpp.
+Definition at line 491 of file qcommandline.cpp.
 .SS "bool QCommandLine::versionEnabled ()"Check if version is enabled or not. 
 .PP
 \fBReturns:\fP
@@ -650,15 +650,15 @@ true if version is enabled; otherwise returns false.
 .PP
 
 .PP
-Definition at line 120 of file qcommandline.cpp.
+Definition at line 140 of file qcommandline.cpp.
 .SH "Member Data Documentation"
 .PP 
 .SS "const \fBQCommandLineConfigEntry\fP \fBQCommandLine::helpEntry\fP = { QCommandLine::Switch, QLatin1Char('h'), QLatin1String('help'), tr('Display this help and exit'), QCommandLine::Optional }\fC [static]\fP"Standard --help, -h entry 
 .PP
-Definition at line 287 of file qcommandline.h.
+Definition at line 312 of file qcommandline.h.
 .SS "const \fBQCommandLineConfigEntry\fP \fBQCommandLine::versionEntry\fP = { QCommandLine::Switch, QLatin1Char('V'), QLatin1String('version'), tr('Display version and exit'), QCommandLine::Optional }\fC [static]\fP"Standard --version, -V entry 
 .PP
-Definition at line 292 of file qcommandline.h.
+Definition at line 317 of file qcommandline.h.
 
 .SH "Author"
 .PP 
