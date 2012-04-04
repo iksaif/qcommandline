@@ -10,16 +10,27 @@ Package: libqcommandline0
 Section: libs
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: A Command line parser for Qt.
+Description: Command line parser for Qt (like getopt).
+ Features include options, switchs, params and automatic
+ --version/--help generation.
 
 Package: libqcommandline-dev
 Section: libdevel
 Architecture: any
 Depends: libqcommandline0 (= ${binary:Version}), ${misc:Depends}
-Description: A Command line parser for Qt - development files.
+Description: Command line parser for Qt (like getopt).
+ Features include options, switchs, params and automatic
+ --version/--help generation.
+ .
+ These are the development files.
 
 Package: libqcommandline0-dbg
 Section: debug
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, libqcommandline0 (= ${binary:Version})
-Description: A Command line parser for Qt - debug info.
+Description: Command line parser for Qt (like getopt).
+ debug info for a command line parser in Qt.
+ .
+ Features include options, switchs, params and automatic
+ --version/--help generation.
+

@@ -3,7 +3,5 @@ build/
 moc_*.cpp
 ui_*.h
 *~
-vb-agent
-res/.directory
 .\#*
 \#*#

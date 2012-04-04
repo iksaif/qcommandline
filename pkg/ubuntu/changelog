@@ -1,0 +1,18 @@
+qcommandline (0.3.0-1) oneiric; urgency=low
+
+  * New upstream release.
+
+ -- Corentin Chary <corentin.chary@gmail.com>  Sun, 15 Oct 2011 19:44:37 +0200
+
+qcommandline (0.2.0-2) maverick; urgency=low
+
+  * Fix debian package
+
+ -- Corentin Chary <corentin.chary@gmail.com>  Wed, 12 Jan 2010 19:44:37 +0200
+
+qcommandline (0.2.0-1) maverick; urgency=low
+
+  * New upstream release.
+
+ -- Corentin Chary <corentin.chary@gmail.com>  Fri, 29 Oct 2010 19:44:37 +0200
+
