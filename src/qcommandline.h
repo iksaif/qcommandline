@@ -168,14 +168,14 @@ public:
      * @param args A list of arguments
      * @sa arguments
      */
-    void setArguments(QStringList args);
+    void setArguments(const QStringList & args);
 
     /**
      * Get command line arguments
      * @returns Command line arguments (like QApplication::arguments())
      * @sa arguments
      */
-    QStringList arguments();
+    QStringList arguments() const;
 
     /**
      * Enable --help,-h switch
@@ -189,7 +189,7 @@ public:
      * @returns true if help is enabled; otherwise returns false.
      * @sa enableVersion
      */
-    bool helpEnabled();
+    bool helpEnabled() const;
 
     /**
      * Enable --version,-V switch
@@ -203,7 +203,7 @@ public:
      * @returns true if version is enabled; otherwise returns false.
      * @sa enableHelp
      */
-    bool versionEnabled();
+    bool versionEnabled() const;
 
     /**
      * Parse command line and emmit signals when switchs, options, or

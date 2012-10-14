@@ -107,13 +107,13 @@ QCommandLine::setArguments(int argc, char *argv[])
 }
 
 void
-QCommandLine::setArguments(QStringList args)
+QCommandLine::setArguments(const QStringList & args)
 {
   d->args = args;
 }
 
 QStringList
-QCommandLine::arguments()
+QCommandLine::arguments() const
 {
   return d->args;
 }
@@ -125,7 +125,7 @@ QCommandLine::enableHelp(bool enable)
 }
 
 bool
-QCommandLine::helpEnabled()
+QCommandLine::helpEnabled() const
 {
   return d->help;
 }
@@ -137,7 +137,7 @@ QCommandLine::enableVersion(bool enable)
 }
 
 bool
-QCommandLine::versionEnabled()
+QCommandLine::versionEnabled() const
 {
   return d->version;
 }
