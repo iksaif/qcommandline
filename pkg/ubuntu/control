@@ -4,7 +4,7 @@ Maintainer: Corentin Chary <corentin.chary@gmail.com>
 Build-Depends: debhelper (>= 7), cmake, libqt4-dev
 Standards-Version: 3.8.3
 Section: libs
-Homepage: http://xf.iksaif.net/dev/qcommandline.html
+Homepage: https://github.com/iksaif/qcommandline
 
 Package: libqcommandline0
 Section: libs
